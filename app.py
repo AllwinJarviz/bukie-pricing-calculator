@@ -10,7 +10,7 @@ from googleapiclient.discovery import build
 from pathlib import Path
 
 # ── Config ────────────────────────────────────────────────────────────────────
-BOOKING_LINK = "https://bukiesignature.com"  # swap for real booking URL
+BOOKING_LINK = "https://appt.link/bukie-signatureQB94tuiF/signature-audit"
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
 ROOT = Path(__file__).parent
 
