@@ -139,8 +139,8 @@ st.markdown("""
   [data-testid="stMarkdownContainer"] em { color: #4f1964 !important; }
 
   /* Error */
-  [data-testid="stAlert"] { background-color: #fff0f0 !important; border-color: #cc0000 !important; }
-  [data-testid="stAlert"] p { color: #cc0000 !important; }
+  [data-testid="stAlert"] { background-color: #f5eeff !important; border-color: #721496 !important; }
+  [data-testid="stAlert"] p { color: #4f1964 !important; }
 
   /* Spinner */
   [data-testid="stSpinner"] p { color: #721496 !important; }
