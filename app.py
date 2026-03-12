@@ -83,13 +83,12 @@ st.markdown("""
     border-color: #721496 !important;
   }
   input[type="radio"]:checked + div { background-color: #721496 !important; }
-  /* Selected option: white text, force override global rule */
+  /* Selected option: white text — use :has() to beat global div colour rule */
+  [data-testid="stRadio"] label:has([aria-checked="true"]) p,
+  [data-testid="stRadio"] label:has([aria-checked="true"]) span,
+  [data-testid="stRadio"] label:has([aria-checked="true"]) div { color: #fff !important; }
   [data-testid="stRadio"] [aria-checked="true"] p { color: #fff !important; }
   [data-testid="stRadio"] [aria-checked="true"] span { color: #fff !important; }
-  [data-testid="stRadio"] [aria-checked="true"] label { color: #fff !important; }
-  [data-testid="stRadio"] [aria-checked="true"] div { color: #fff !important; }
-  [data-testid="stRadio"] [data-baseweb="radio"][aria-checked="true"] ~ div p,
-  [data-testid="stRadio"] [data-baseweb="radio"][aria-checked="true"] ~ div span { color: #fff !important; }
 
   /* Primary button — explicit white text overrides global dark-text rule */
   .stButton > button, [data-testid="stFormSubmitButton"] > button {
