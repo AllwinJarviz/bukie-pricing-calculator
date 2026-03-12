@@ -120,12 +120,20 @@ st.markdown("""
   }
   [data-testid="stLinkButton"] a:hover { background: #f0e0ff !important; color: #4f1964 !important; }
 
-  /* Form container: white card for Q3-5 */
+  /* Strip form's own border — card comes from .questions-card wrapper */
   div[data-testid="stForm"] {
-    background-color: #fff !important;
-    border: 1px solid #e0cef5 !important;
-    border-radius: 12px !important;
-    padding: 1.5rem !important;
+    background-color: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+  }
+
+  /* Full questions wrapper — covers all 5 questions as one card */
+  .questions-card {
+    background: #fff;
+    border: 1px solid #e0cef5;
+    border-radius: 12px;
+    padding: 1.8rem 1.8rem 0.5rem;
+    margin-bottom: 1.5rem;
   }
 
   /* HR */
@@ -348,6 +356,8 @@ if "charge_type_sel" not in st.session_state:
 # ── STEP 1: Questions ─────────────────────────────────────────────────────────
 if st.session_state.step == "questions":
 
+    st.markdown('<div class="questions-card">', unsafe_allow_html=True)
+
     st.markdown('<p class="step-label">1. How long have you been running your business?</p>', unsafe_allow_html=True)
     years = st.radio(
         "", ["1-2 years", "3-5 years", "6-10 years", "10+ years"],
@@ -395,6 +405,8 @@ if st.session_state.step == "questions":
         years_since_raise = raise_options.index(years_since_raise_label)
 
         submitted = st.form_submit_button("Calculate my pricing leak →", use_container_width=True)
+
+    st.markdown('</div>', unsafe_allow_html=True)
 
     if submitted:
         st.session_state.inputs = {
