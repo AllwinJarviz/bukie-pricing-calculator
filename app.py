@@ -129,15 +129,17 @@ st.markdown("""
     border-bottom: none;
     border-radius: 12px 12px 0 0;
     padding: 1.8rem 1.8rem 1rem;
+    margin-bottom: 0 !important;
   }
 
-  /* Form = bottom portion of the card, connects seamlessly */
+  /* Pull form up to close the Streamlit gap and join the two halves */
   div[data-testid="stForm"] {
     background-color: #fff !important;
     border: 1px solid #e0cef5 !important;
     border-top: none !important;
     border-radius: 0 0 12px 12px !important;
     padding: 1rem 1.8rem 1.5rem !important;
+    margin-top: -24px !important;
     margin-bottom: 1.5rem !important;
   }
 
