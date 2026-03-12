@@ -83,10 +83,13 @@ st.markdown("""
     border-color: #721496 !important;
   }
   input[type="radio"]:checked + div { background-color: #721496 !important; }
-  /* Selected option label text: white on purple highlight */
-  [data-testid="stRadio"] [aria-checked="true"] p,
-  [data-testid="stRadio"] [aria-checked="true"] span,
+  /* Selected option: white text, force override global rule */
+  [data-testid="stRadio"] [aria-checked="true"] p { color: #fff !important; }
+  [data-testid="stRadio"] [aria-checked="true"] span { color: #fff !important; }
   [data-testid="stRadio"] [aria-checked="true"] label { color: #fff !important; }
+  [data-testid="stRadio"] [aria-checked="true"] div { color: #fff !important; }
+  [data-testid="stRadio"] [data-baseweb="radio"][aria-checked="true"] ~ div p,
+  [data-testid="stRadio"] [data-baseweb="radio"][aria-checked="true"] ~ div span { color: #fff !important; }
 
   /* Primary button — explicit white text overrides global dark-text rule */
   .stButton > button, [data-testid="stFormSubmitButton"] > button {
@@ -120,20 +123,23 @@ st.markdown("""
   }
   [data-testid="stLinkButton"] a:hover { background: #f0e0ff !important; color: #4f1964 !important; }
 
-  /* Strip form's own border — card comes from .questions-card wrapper */
-  div[data-testid="stForm"] {
-    background-color: transparent !important;
-    border: none !important;
-    padding: 0 !important;
-  }
-
-  /* Full questions wrapper — covers all 5 questions as one card */
-  .questions-card {
+  /* Q1+Q2 top portion of the card */
+  .questions-top {
     background: #fff;
     border: 1px solid #e0cef5;
-    border-radius: 12px;
-    padding: 1.8rem 1.8rem 0.5rem;
-    margin-bottom: 1.5rem;
+    border-bottom: none;
+    border-radius: 12px 12px 0 0;
+    padding: 1.8rem 1.8rem 1rem;
+  }
+
+  /* Form = bottom portion of the card, connects seamlessly */
+  div[data-testid="stForm"] {
+    background-color: #fff !important;
+    border: 1px solid #e0cef5 !important;
+    border-top: none !important;
+    border-radius: 0 0 12px 12px !important;
+    padding: 1rem 1.8rem 1.5rem !important;
+    margin-bottom: 1.5rem !important;
   }
 
   /* HR */
@@ -180,8 +186,8 @@ st.markdown("""
 
   /* ── Hero block ── */
   .hero {
-    background: linear-gradient(135deg, #1a0a2e 0%, #4f1964 100%);
-    border-bottom: 3px solid #721496;
+    background: linear-gradient(135deg, #4f1964 0%, #9b2fd4 100%);
+    border-bottom: 3px solid #c060f0;
     padding: 3rem 2rem 2.5rem;
     margin-bottom: 2rem;
     margin-left: -1rem;
@@ -356,7 +362,7 @@ if "charge_type_sel" not in st.session_state:
 # ── STEP 1: Questions ─────────────────────────────────────────────────────────
 if st.session_state.step == "questions":
 
-    st.markdown('<div class="questions-card">', unsafe_allow_html=True)
+    st.markdown('<div class="questions-top">', unsafe_allow_html=True)
 
     st.markdown('<p class="step-label">1. How long have you been running your business?</p>', unsafe_allow_html=True)
     years = st.radio(
