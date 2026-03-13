@@ -215,18 +215,16 @@ def fmt_gbp(n):
     return f"£{n:,.0f}"
 
 def get_sheets_service():
-    creds = None
+    import json as _json
     token = ROOT / "token.json"
-    creds_file = ROOT / "credentials.json"
     if token.exists():
         creds = Credentials.from_authorized_user_file(str(token), SCOPES)
-    if not creds or not creds.valid:
-        if creds and creds.expired and creds.refresh_token:
-            creds.refresh(Request())
-        else:
-            flow = InstalledAppFlow.from_client_secrets_file(str(creds_file), SCOPES)
-            creds = flow.run_local_server(port=0)
-        token.write_text(creds.to_json())
+    elif "gcp_token" in st.secrets:
+        creds = Credentials.from_authorized_user_info(_json.loads(st.secrets["gcp_token"]), SCOPES)
+    else:
+        return None
+    if creds and creds.expired and creds.refresh_token:
+        creds.refresh(Request())
     return build("sheets", "v4", credentials=creds)
 
 def save_lead(email, name, inputs, results):
@@ -235,6 +233,8 @@ def save_lead(email, name, inputs, results):
         if not sheet_id:
             return
         svc = get_sheets_service()
+        if not svc:
+            return
         row = [
             datetime.now().strftime("%Y-%m-%d %H:%M"),
             name, email,
